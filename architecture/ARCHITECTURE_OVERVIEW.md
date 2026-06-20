@@ -1,6 +1,6 @@
-# SYSTEM ARCHITECTURE: Automated Traffic Violation Detection System
+SYSTEM ARCHITECTURE: Automated Traffic Violation Detection System
 
-## 1. High-Level Architecture
+ 1. High-Level Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -67,9 +67,9 @@
 
 ---
 
-## 2. Component Architecture
+ 2. Component Architecture
 
-### 2.1 Image Preprocessing Component
+ 2.1 Image Preprocessing Component
 
 ```
 INPUT: Raw image from camera
@@ -102,7 +102,7 @@ INPUT: Raw image from camera
 OUTPUT: Preprocessed image (640x640, normalized)
 ```
 
-**Key Algorithms:**
+Key Algorithms:
 - Contrast Limited Adaptive Histogram Equalization (CLAHE)
 - Bilateral Filtering for edge-preserving denoising
 - Richardson-Lucy Deconvolution for motion blur
@@ -110,7 +110,7 @@ OUTPUT: Preprocessed image (640x640, normalized)
 
 ---
 
-### 2.2 Detection & Recognition Component
+ 2.2 Detection & Recognition Component
 
 ```
 INPUT: Preprocessed image
@@ -139,15 +139,14 @@ OUTPUT: Structured detection results
 }
 ```
 
-**Model Specifications:**
+Model Specifications:
 - YOLOv8 Large (~43 MB, ~45 FPS on RTX3090)
 - Helmet Classifier CNN (~15 MB)
 - Seatbelt Detector CNN (~12 MB)
 - Custom Traffic Light Classifier (~8 MB)
 
----
 
-### 2.3 Violation Classification Component
+ 2.3 Violation Classification Component
 
 ```
 INPUT: Detection results + Classified attributes
@@ -201,12 +200,12 @@ OUTPUT: Violation results
 
 ---
 
-### 2.4 License Plate Recognition Component
+ 2.4 License Plate Recognition Component
 
 ```
 INPUT: Vehicle ROI from detection
   ↓
-[License Plate Detection]
+[License Plate Detection High-Security Registration Plate (HSRP) Mandatory]
   ├─ EAST Text Detector
   ├─ Color-based segmentation (yellow/white)
   └─ Output: Plate ROI
@@ -215,6 +214,7 @@ INPUT: Vehicle ROI from detection
   ├─ Adaptive thresholding
   ├─ Morphological operations
   └─ Character separation
+
   ↓
 [OCR Processing]
   ├─ EasyOCR / PaddleOCR engine
@@ -236,7 +236,7 @@ OUTPUT: Registration details
 
 ---
 
-### 2.5 Evidence Generation Component
+ 2.5 Evidence Generation Component
 
 ```
 INPUT: Original image + Detections + Violations + Registration
@@ -276,7 +276,7 @@ OUTPUT: Violation Record
 
 ---
 
-## 3. Data Flow Diagram
+ 3. Data Flow Diagram
 
 ```
 ┌─────────────────────────┐
@@ -332,20 +332,20 @@ Web Dashboard       Mobile App         3rd Party
 
 ---
 
-## 4. Technology Stack
+ 4. Technology Stack
 
-### 4.1 ML/DL Framework
+ 4.1 ML/DL Framework
 - **Primary:** PyTorch 2.0+
 - **Alternative:** TensorFlow 2.13+
 - **Optimization:** TensorRT, ONNX Runtime
 
-### 4.2 Computer Vision
-- **Object Detection:** YOLOv8
-- **Image Processing:** OpenCV, scikit-image
+ 4.2 Computer Vision
+- Object Detection: YOLOv8
+- Image Processing: OpenCV, scikit-image
 - **OCR:** EasyOCR, PaddleOCR
 - **Pose Estimation:** MediaPipe, OpenPose
 
-### 4.3 Backend Services
+ 4.3 Backend Services
 - **API Framework:** FastAPI
 - **Message Queue:** Kafka / RabbitMQ
 - **Task Queue:** Celery
@@ -353,23 +353,23 @@ Web Dashboard       Mobile App         3rd Party
 - **Cache:** Redis 7+
 - **Object Storage:** MinIO (self-hosted) / AWS S3
 
-### 4.4 Infrastructure
-- **Containerization:** Docker
-- **Orchestration:** Kubernetes
-- **Edge Deployment:** NVIDIA Jetson (Orin Nano / AGX Orin)
-- **Monitoring:** Prometheus + Grafana
-- **Logging:** ELK Stack (Elasticsearch, Logstash, Kibana)
+ 4.4 Infrastructure
+- Containerization:** Docker
+- Orchestration: Kubernetes
+- Edge Deployment: NVIDIA Jetson (Orin Nano / AGX Orin)
+- Monitoring: Prometheus + Grafana
+- Logging: ELK Stack (Elasticsearch, Logstash, Kibana)
 
-### 4.5 Frontend
-- **Web:** React.js / Vue.js
-- **Dashboards:** Grafana
-- **Mobile:** React Native / Flutter
+ 4.5 Frontend
+- Web: React.js / Vue.js
+- Dashboards:Grafana
+- Mobile: React Native / Flutter
 
 ---
 
-## 5. Scalability Architecture
+ 5. Scalability Architecture
 
-### 5.1 Horizontal Scaling
+ 5.1 Horizontal Scaling
 
 ```
 Load Balancer
@@ -384,7 +384,7 @@ Each worker processes images from Kafka topic independently.
 Auto-scaling based on queue depth.
 ```
 
-### 5.2 Database Scaling
+ 5.2 Database Scaling
 
 ```
 Primary PostgreSQL (writes)
@@ -397,7 +397,7 @@ Read queries distributed across replicas.
 Write queries go to primary.
 ```
 
-### 5.3 Caching Strategy
+ 5.3 Caching Strategy
 
 ```
 L1 Cache: Redis (hot violation data)
@@ -414,9 +414,9 @@ L3 Cache: Database query cache
 
 ---
 
-## 6. Deployment Variants
+ 6. Deployment Variants
 
-### 6.1 On-Site (Edge) Deployment
+6.1 On-Site (Edge) Deployment
 
 ```
 Traffic Camera → Jetson Orin → Local Processing
@@ -428,14 +428,14 @@ Traffic Camera → Jetson Orin → Local Processing
                         Upload metadata to cloud
 ```
 
-**Deployment Spec:**
+Deployment Spec:
 - NVIDIA Jetson Orin AGX (275 TFLOPS)
 - TensorRT-optimized models
 - <500ms processing per image
 - Local PostgreSQL instance
 - WiFi/LTE connectivity for cloud sync
 
-### 6.2 Cloud-Based Deployment
+ 6.2 Cloud-Based Deployment
 
 ```
 Traffic Camera → Kafka Cloud Topic
@@ -449,12 +449,12 @@ Traffic Camera → Kafka Cloud Topic
          Web Dashboard + REST API
 ```
 
-**Deployment Options:**
+Deployment Options:
 - AWS (EC2 + RDS + S3)
 - Google Cloud (Compute Engine + Cloud SQL + Cloud Storage)
 - Azure (Virtual Machines + Database + Blob Storage)
 
-### 6.3 Hybrid Deployment
+ 6.3 Hybrid Deployment
 
 ```
 Edge (on-site Jetson)          Cloud Services
@@ -623,5 +623,5 @@ PII Handling:
 
 ---
 
-**Document Status:** Architecture Complete  
-**Review Stage:** Ready for Implementation Review
+Document Status: Architecture Complete  
+Review Stage: Ready for Implementation Review
