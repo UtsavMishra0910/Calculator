@@ -1,4 +1,4 @@
-# Automated Photo Identification and Classification for Traffic Violations Using Computer Vision
+ Automated Photo Identification and Classification for Traffic Violations Using Computer Vision
 
 ## Project Overview
 
@@ -23,8 +23,7 @@ An intelligent **Computer Vision-based system** that automatically:
 ---
 
 ## Key Features
-
-✅ **Multi-violation Detection**
+Multi-violation Detection**
 - Helmet non-compliance
 - Seatbelt non-compliance
 - Triple riding / overcrowding
